@@ -5,11 +5,10 @@ import flow.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 public class EmailApp implements IApp<String> {
-    private static final Logger logger = LogManager.getLogger(EmailApp.class);
+    private static final Logger logger = Logger.getLogger(EmailApp.class);
     private Queue<String> messages;
 
     public EmailApp() {
@@ -18,6 +17,7 @@ public class EmailApp implements IApp<String> {
 
     public String in(IEvent event) throws EventException, ProtocolException, ActionException {
         String message = (String) event.trigger();
+        logger.debug("Server got a msg: " + message);
         if (!message.startsWith("MSG:")) {
             throw new ProtocolException();
         }
@@ -26,6 +26,9 @@ public class EmailApp implements IApp<String> {
     }
 
     public String popMessage() {
+        for (String msg : messages) {
+            logger.debug("Messages: " + msg);
+        }
         String message = messages.remove();
         return message;
     }

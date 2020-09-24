@@ -1,7 +1,6 @@
 package challenges.flow;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import flow.ActionException;
 import flow.EventException;
@@ -9,7 +8,7 @@ import flow.IEvent;
 
 public class EmailEvent implements IEvent<String> {
 
-    private static final Logger logger = LogManager.getLogger(EmailEvent.class);
+    private static final Logger logger = Logger.getLogger(EmailEvent.class);
     private String body;
 
     public EmailEvent(String body) {
@@ -18,6 +17,7 @@ public class EmailEvent implements IEvent<String> {
 
     @Override
     public String trigger() throws EventException, ActionException {
+        logger.debug("Event triggered");
         return body;
     }
 }
